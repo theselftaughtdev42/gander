@@ -1,0 +1,5 @@
+/venv
+/music
+genre_data.json
+song_data.json
+.DS_Store
