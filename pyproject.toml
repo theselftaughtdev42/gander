@@ -1,0 +1,7 @@
+[project]
+name = "forage"
+version = "0.1.0"
+description = "App to catalogue my Artlist downloads."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []

@@ -1,2 +1,0 @@
-music-tag==0.4.3
-mutagen==1.46.0
