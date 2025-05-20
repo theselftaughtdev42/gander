@@ -3,3 +3,5 @@
 genre_data.json
 song_data.json
 .DS_Store
+art
+database.db
