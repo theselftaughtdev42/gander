@@ -1,5 +1,5 @@
 [project]
-name = "forage"
+name = "gander"
 version = "0.1.0"
 description = "App to catalogue my Artlist downloads."
 readme = "README.md"
