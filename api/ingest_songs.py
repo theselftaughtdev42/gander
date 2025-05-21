@@ -3,7 +3,7 @@ from tinytag import TinyTag
 from rich import print
 from sqlmodel import Session, select
 
-from .db import create_db_and_tables, engine
+from .db import create_db_and_tables, drop_all_tables, engine
 from .models import (
     GENRES,
     MOODS,
@@ -186,6 +186,7 @@ def load_songs():
     print(f"Loaded {count} songs.")
 
 if __name__ == "__main__":
+    drop_all_tables()
     create_db_and_tables()
     load_genres()
     load_artists_and_albums()
