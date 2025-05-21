@@ -146,11 +146,31 @@ class Instrument(SQLModel, table=True):
     songs: list["Song"] = Relationship(back_populates="instruments", link_model=SongInstrumentLink)
 
 
+class Artist(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    albums: list["Album"] = Relationship(back_populates="artist")
+    songs: list["Song"] = Relationship(back_populates="artist")
+
+
+class Album(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(index=True)
+    artist_id: int | None = Field(default=None, foreign_key="artist.id")
+    artist: Artist | None = Relationship(back_populates="albums")
+    songs: list["Song"] = Relationship(back_populates="album")
+
+
 class Song(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     title: str = Field(index=True)
-    artist: str = Field(index=True)
-    album: str = Field(index=True)
+
+    artist_id: int | None = Field(default=None, foreign_key="artist.id")
+    artist: Artist | None = Relationship(back_populates="songs")
+
+    album_id: int | None = Field(default=None, foreign_key="album.id")
+    album: Album | None = Relationship(back_populates="songs")
+
     duration: float
     filepath: str
     genres: list[Genre] = Relationship(back_populates="songs", link_model=SongGenreLink)

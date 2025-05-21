@@ -4,7 +4,20 @@ from rich import print
 from sqlmodel import Session, select
 
 from .db import create_db_and_tables, engine
-from .models import GENRES, MOODS, THEMES, INSTRUMENTS, NEW_MAPPINGS, Genre, Mood, Theme, Instrument, Song
+from .models import (
+    GENRES,
+    MOODS,
+    THEMES,
+    INSTRUMENTS,
+    NEW_MAPPINGS,
+    Genre,
+    Mood,
+    Theme,
+    Instrument,
+    Song,
+    Artist,
+    Album,
+)
 
 SUPPORTED_EXTS = ('.mp3', '.flac', '.m4a', '.ogg', '.wav')
 
@@ -87,6 +100,33 @@ def get_moods(moods: list[str]) -> list[Mood]:
                 results.append(result)
     return results
 
+def load_artists_and_albums():
+    print("Loading Artists and Albums...")
+    session = Session(engine)
+    artists_done = []
+    albums_done = []
+
+    for dir in [d for d in Path("./music").iterdir() if d.is_dir()]:
+        raw_artist, raw_album = dir.name.split(" - ")
+
+        if raw_artist not in artists_done:
+            artist = Artist(name=raw_artist)
+            session.add(artist)
+            session.commit()
+            session.refresh(artist)
+            artists_done.append(raw_artist)
+        else:
+            artist = session.exec(select(Artist).where(Artist.name == raw_artist)).one()
+
+        if raw_album not in albums_done:
+            album = Album(name=raw_album, artist=artist)
+            session.add(album)
+            session.commit()
+            session.refresh(album)
+            session.refresh(artist)
+            albums_done.append(raw_album)
+
+
 def load_songs():
     session = Session(engine)
     count = 0
@@ -99,6 +139,10 @@ def load_songs():
                     tag = TinyTag.get(file_path)
 
                     artist, album = file_path.parent.name.split(" - ")
+                    artist = session.exec(
+                        select(Artist).where(Artist.name == artist)
+                    ).one()
+                    album = session.exec(select(Album).where(Album.name == album)).one()
 
                     raw_genres = ["None"] if tag.genre is None else tag.genre.split(",")
                     raw_genres = [genre.strip().lower() for genre in raw_genres]
@@ -131,16 +175,18 @@ def load_songs():
 
                     session.add(song)
                     session.commit()
+
                     if count % 200 == 0:
                         print(f"Loaded {count} songs...")
 
                 except Exception as e:
                     print(f"Error reading {file_path}: {e}")
-                    exit()
+
     session.close()
     print(f"Loaded {count} songs.")
 
 if __name__ == "__main__":
     create_db_and_tables()
     load_genres()
+    load_artists_and_albums()
     load_songs()
