@@ -26,19 +26,19 @@ def load_genres():
 
     print("Loading Genres...")
     for genre in GENRES:
-        session.add(Genre(genre=genre))
+        session.add(Genre(name=genre))
     
     print("Loading Moods...")
     for mood in MOODS:
-        session.add(Mood(mood=mood))
+        session.add(Mood(name=mood))
     
     print("Loading Themes...")
     for theme in THEMES:
-        session.add(Theme(theme=theme))
+        session.add(Theme(name=theme))
 
     print("Loading Instruments...")
     for instrument in INSTRUMENTS:
-        session.add(Instrument(instrument=instrument))
+        session.add(Instrument(name=instrument))
     
     session.commit()
     session.close()
@@ -53,7 +53,7 @@ def get_genres(genres: list[str]) -> list[Genre]:
             if genre in genre_cache:
                 results.append(genre_cache[genre])
             else:
-                result = session.exec(select(Genre).where(Genre.genre == genre)).one()
+                result = session.exec(select(Genre).where(Genre.name == genre)).one()
                 genre_cache[genre] = result
                 results.append(result)
     return results
@@ -67,7 +67,9 @@ def get_instruments(instruments: list[str]) -> list[Instrument]:
             if instrument in instrument_cache:
                 results.append(instrument_cache[instrument])
             else:
-                result = session.exec(select(Instrument).where(Instrument.instrument == instrument)).one()
+                result = session.exec(
+                    select(Instrument).where(Instrument.name == instrument)
+                ).one()
                 instrument_cache[instrument] = result
                 results.append(result)
     return results
@@ -81,7 +83,7 @@ def get_themes(themes: list[str]) -> list[Theme]:
             if theme in theme_cache:
                 results.append(theme_cache[theme])
             else:
-                result = session.exec(select(Theme).where(Theme.theme == theme)).one()
+                result = session.exec(select(Theme).where(Theme.name == theme)).one()
                 theme_cache[theme] = result
                 results.append(result)
     return results
@@ -95,7 +97,7 @@ def get_moods(moods: list[str]) -> list[Mood]:
             if mood in mood_cache:
                 results.append(mood_cache[mood])
             else:
-                result = session.exec(select(Mood).where(Mood.mood == mood)).one()
+                result = session.exec(select(Mood).where(Mood.name == mood)).one()
                 mood_cache[mood] = result
                 results.append(result)
     return results

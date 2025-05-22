@@ -113,39 +113,72 @@ class SongGenreLink(SQLModel, table=True):
     song_id: uuid.UUID = Field(foreign_key="song.id", primary_key=True)
     genre_id: uuid.UUID = Field(foreign_key="genre.id", primary_key=True)
 
+
 class SongMoodLink(SQLModel, table=True):
     song_id: uuid.UUID = Field(foreign_key="song.id", primary_key=True)
     mood_id: uuid.UUID = Field(foreign_key="mood.id", primary_key=True)
 
+
 class SongThemeLink(SQLModel, table=True):
     song_id: uuid.UUID = Field(foreign_key="song.id", primary_key=True)
     theme_id: uuid.UUID = Field(foreign_key="theme.id", primary_key=True)
+
 
 class SongInstrumentLink(SQLModel, table=True):
     song_id: uuid.UUID = Field(foreign_key="song.id", primary_key=True)
     instrument_id: uuid.UUID = Field(foreign_key="instrument.id", primary_key=True)
 
 
-class Genre(SQLModel, table=True):
+class GenreBase(SQLModel):
+    name: str = Field(index=True)
+
+
+class Genre(GenreBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    genre: str = Field(index=True)
     songs: list["Song"] = Relationship(back_populates="genres", link_model=SongGenreLink)
 
-class Mood(SQLModel, table=True):
+
+class GenrePublic(GenreBase):
+    name: str
+
+
+class MoodBase(SQLModel):
+    name: str = Field(index=True)
+
+
+class Mood(MoodBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    mood: str = Field(index=True)
     songs: list["Song"] = Relationship(back_populates="moods", link_model=SongMoodLink)
 
-class Theme(SQLModel, table=True):
+
+class MoodPublic(MoodBase):
+    name: str
+
+
+class ThemeBase(SQLModel):
+    name: str = Field(index=True)
+
+
+class Theme(ThemeBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    theme: str = Field(index=True)
     songs: list["Song"] = Relationship(back_populates="themes", link_model=SongThemeLink)
 
-class Instrument(SQLModel, table=True):
+
+class ThemePublic(ThemeBase):
+    name: str
+
+
+class InstrumentBase(SQLModel):
+    name: str = Field(index=True)
+
+
+class Instrument(InstrumentBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    instrument: str = Field(index=True)
     songs: list["Song"] = Relationship(back_populates="instruments", link_model=SongInstrumentLink)
 
+
+class InstrumentPublic(InstrumentBase):
+    name: str
 
 class ArtistBase(SQLModel):
     name: str = Field(index=True)
@@ -174,6 +207,7 @@ class Album(AlbumBase, table=True):
     artist_id: uuid.UUID | None = Field(default=None, foreign_key="artist.id")
     artist: Artist | None = Relationship(back_populates="albums")
     songs: list["Song"] = Relationship(back_populates="album")
+
 
 class AlbumPublic(AlbumBase):
     id: uuid.UUID
@@ -207,6 +241,7 @@ class Song(SongBase, table=True):
 
 class SongPublic(SongBase):
     id: uuid.UUID
+    filepath: str
     artist: Artist
     album: Album
 

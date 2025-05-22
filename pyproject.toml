@@ -5,6 +5,7 @@ description = "App to catalogue my Artlist downloads."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi[standard]>=0.115.12",
     "pydantic>=2.11.4",
     "requests>=2.32.3",
     "sqlmodel>=0.0.24",
