@@ -13,5 +13,5 @@ app.include_router(filter.router)
 
 @app.get("/")
 def root():
-    return "Welcome to Gander!"
+    return "Welcome to the Gander API!"
 

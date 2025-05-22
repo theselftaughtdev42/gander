@@ -1,5 +1,5 @@
 [project]
-name = "gander"
+name = "gander-api"
 version = "0.1.0"
 description = "App to catalogue my Artlist downloads."
 readme = "README.md"
