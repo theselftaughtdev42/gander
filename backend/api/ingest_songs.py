@@ -163,12 +163,17 @@ def load_songs():
                     if file_title != title:
                         title = title if len(title) > len(file_title) else file_title
 
+                    if file_path.parts[0] != "music":
+                        raise Exception("Unexpected filepath")
+
+                    stripped_filepath = Path(*file_path.parts[1:])
+
                     song = Song(
                         title=title,
                         artist=artist,
                         album=album,
                         duration=round(tag.duration, 2),
-                        filepath=str(file_path),
+                        filepath=str(stripped_filepath),
                         genres=genres,
                         moods=moods,
                         themes=themes,
