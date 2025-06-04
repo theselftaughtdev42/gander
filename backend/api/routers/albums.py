@@ -11,9 +11,14 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=list[AlbumPublic])
-def read_albums(*, session: Session = Depends(get_session)):
+def read_albums(
+    *,
+    session: Session = Depends(get_session),
+    offset: int = 0,
+    limit: int = 20,
+):
     albums = session.exec(
-        select(Album).order_by(Album.name).offset(0).limit(20)
+        select(Album).order_by(Album.name).offset(offset).limit(limit)
     ).all()
     return albums
 
