@@ -17,7 +17,17 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
     const m = Math.floor(seconds / 60);
     const s = Math.floor(seconds % 60);
     return `${m}:${s.toString().padStart(2, '0')}`;
-  };  
+  };
+
+  useEffect(() => {
+    audioRefs.current.forEach((audio) => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+    setCurrentPlaying(null);
+  }, [songs]);
 
   useEffect(() => {
     const update = () => {
@@ -59,7 +69,7 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
           a.load();
         }
       });
-      audio.src = `${API_URL + "/song_files/" + songs[index].filepath}`;
+      audio.src = `${API_URL}/song_files/${encodeURIComponent(songs[index].filepath)}`;
       audio.load();
       audio.play();
       setCurrentPlaying(index);
@@ -127,7 +137,7 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
               {formatTime(timeData[index]?.current)} / {formatTime(song.duration)}
             </div>
 
-            <a href={API_URL + "/song_files/" + song.filepath} download className="download-button">
+            <a href={API_URL + "/song_files/" + encodeURIComponent(song.filepath)} download className="download-button">
               <FiDownload />
             </a>
 

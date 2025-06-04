@@ -13,7 +13,7 @@ const ArtistPage = () => {
   useEffect(() => {
     const fetchArtist = async () => {
       try {
-        const response = await fetch(`${API_URL}/artists/${artistId}`);
+        const response = await fetch(`${API_URL}/artists/${encodeURIComponent(artistId)}`);
         const data = await response.json();
 
         setArtist(data);
@@ -25,7 +25,7 @@ const ArtistPage = () => {
 
     const fetchArtistSongs = async () => {
       try {
-        const response = await fetch(`${API_URL}/songs/by_artist/${artistId}`);
+        const response = await fetch(`${API_URL}/songs/by_artist/${encodeURIComponent(artistId)}`);
         const data = await response.json();
 
         setArtistSongs(data);
