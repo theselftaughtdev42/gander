@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..dependencies import get_session
-from ..models import Song, SongPublic, SongPublicWithGenres
+from ..models import Song, SongPublic, Artist
 from sqlmodel import Session, select
 from sqlalchemy.sql import func
 import uuid
@@ -17,12 +17,24 @@ def read_songs(*, session: Session = Depends(get_session)):
     songs = session.exec(select(Song)).all()
     return songs
 
-@router.get("/by_id/{song_id}", response_model=SongPublicWithGenres)
+@router.get("/by_id/{song_id}", response_model=SongPublic)
 def read_song(*, session: Session = Depends(get_session), song_id: uuid.UUID):
     song = session.get(Song, song_id)
     if not song:
         raise HTTPException(status_code=404, detail="Song not found")
     return song
+
+@router.get("/by_artist/{artist_id}", response_model=list[SongPublic])
+def read_song_by_artist(
+    *, session: Session = Depends(get_session), artist_id: uuid.UUID
+):
+    song = session.exec(
+        select(Song).where(Song.artist_id == artist_id).order_by(Song.title)
+    )
+    if not song:
+        raise HTTPException(status_code=404, detail="Song not found")
+    return song
+
 
 @router.get("/random/{amount}", response_model=list[SongPublic])
 def read_random_songs(*, session: Session = Depends(get_session), amount: int):
