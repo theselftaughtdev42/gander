@@ -1,17 +1,19 @@
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+.artist-container {
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   padding: 2rem;
+  justify-content: center;
 }
 
-.grid-tile {
+.artist-tile {
+  height: 120px;
+  width: 120px;
   background-color: #2a2a2a;
   border-radius: 8px;
   color: white;
   padding: 1rem;
   text-align: center;
-  aspect-ratio: 1/1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,4 +22,6 @@
 
 .artist-link {
   text-decoration: none;
+  color: white;
+  font-weight: 500;
 }

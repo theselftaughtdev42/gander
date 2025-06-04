@@ -1,15 +1,16 @@
 import React from 'react';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <header className="app-header">
       <h1 className="app-title">MyTunes</h1>
       <nav className="nav-links">
-        <a href="/">Random Songs</a>
-        <a href="/songs">All Songs</a>
-        <a href="/albums">Albums</a>
-        <a href="/artists">Artists</a>
+        <Link to="/">Random Songs</Link>
+        <Link to="/songs">All Songs</Link>
+        <Link to="/albums">Albums</Link>
+        <Link to="/artists">Artists</Link>
       </nav>
     </header>
   );

@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 
 const ArtistGrid = ({ artists }) => {
   return (
-    <div className='grid-container'>
+    <div className='artist-container'>
       {artists.map((artist, i) => (
         <Link
           to={`/artist/${encodeURIComponent(artist.id)}`}
           key={artist.id}
           className='artist-link'
         >
-          <div key={artist.id} className='grid-tile'>
+          <div key={artist.id} className='artist-tile'>
           {artist.name}
           </div>        
         </Link>

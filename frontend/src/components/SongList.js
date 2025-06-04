@@ -88,7 +88,9 @@ const SongList = ({ songs }) => {
           <div className="song-content">
             <div className="song-info">
                 <div className="song-title">{song.title}</div>
-                <div className="song-artist">{song.artist.name}</div>
+                {song.artist && song.artist.name && (
+                  <div className="song-artist">{song.artist.name}</div>
+                )}
             </div>
             <input
                 type="range"

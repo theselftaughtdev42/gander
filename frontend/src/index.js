@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import SongsRandom from './components/SongsRandom';
 import ArtistAll from './components/ArtistAll';
+import ArtistPage from './components/ArtistPage';
+import AlbumSongs from './components/AlbumSongs';
 
 const Songs = () => <div>Songs</div>;
 const Albums = () => <div>Albums</div>;
@@ -18,7 +20,9 @@ root.render(
         <Route path="/" element={<SongsRandom />} />
         <Route path="/songs" element={<Songs />} />
         <Route path="/albums" element={<Albums />} />
+        <Route path="/album/:albumId" element={<AlbumSongs />} />
         <Route path="/artists" element={<ArtistAll />} />
+        <Route path="/artist/:artistId" element={<ArtistPage />} />
       </Routes>
     </div>
   </Router>
