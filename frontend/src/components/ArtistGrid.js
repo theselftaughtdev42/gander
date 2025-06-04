@@ -7,7 +7,7 @@ const ArtistGrid = ({ artists }) => {
     <div className='artist-container'>
       {artists.map((artist, i) => (
         <Link
-          to={`/artist/${encodeURIComponent(artist.id)}`}
+          to={`/artist/${artist.id}`}
           key={artist.id}
           className='artist-link'
         >

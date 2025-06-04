@@ -4,7 +4,7 @@ import { FiDownload } from 'react-icons/fi';
 import './SongList.css';
 import { API_URL } from '../config';
 
-const SongList = ({ songs }) => {
+const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
   const audioRefs = useRef([]);
   const [currentPlaying, setCurrentPlaying] = useState(null);
   const [progress, setProgress] = useState({}); // { index: currentTime }
@@ -76,11 +76,13 @@ const SongList = ({ songs }) => {
     <div className="song-list">
       {songs.map((song, index) => (
         <div key={index} className="song-item">
+          {showAlbumArt && 
           <img 
             src={API_URL + "/album_art/NoAlbumArt.jpg"}
             alt="Album Art"
             className="album-art"
           />
+          }
           <button className="play-button" onClick={() => handleTogglePlay(index)}>
             {currentPlaying === index ? <FaPause /> : <FaPlay />}
           </button>
@@ -88,9 +90,7 @@ const SongList = ({ songs }) => {
           <div className="song-content">
             <div className="song-info">
                 <div className="song-title">{song.title}</div>
-                {song.artist && song.artist.name && (
-                  <div className="song-artist">{song.artist.name}</div>
-                )}
+                {showArtist && <div className="song-artist">{song.artist.name}</div>}
             </div>
             <input
                 type="range"
