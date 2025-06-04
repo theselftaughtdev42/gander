@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { API_URL } from '../config';
 import SongList from './SongList';
 
-const RandomSongs = () => {
+const SongsRandom = () => {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
@@ -28,4 +28,4 @@ const RandomSongs = () => {
   );
 };
 
-export default RandomSongs;
+export default SongsRandom;

@@ -2,7 +2,7 @@ import { API_URL } from '../config';
 import React, { useEffect, useState } from 'react';
 import ArtistGrid from './ArtistGrid';
 
-const AllArtists = () => {
+const ArtistAll = () => {
   const [artists, setArtists] = useState([]);
 
   useEffect(() => {
@@ -30,4 +30,4 @@ const AllArtists = () => {
   );
 };
 
-export default AllArtists;
+export default ArtistAll;
