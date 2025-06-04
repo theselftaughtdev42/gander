@@ -44,6 +44,7 @@ const AlbumAll = () => {
     };
 
     fetchAlbums();
+    // eslint-disable-next-line
   }, [offset])
 
 
