@@ -5,11 +5,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import SongsRandom from './components/SongsRandom';
 import ArtistAll from './components/ArtistAll';
+import AlbumAll from './components/AlbumAll'
 import ArtistPage from './components/ArtistPage';
 import AlbumSongs from './components/AlbumSongs';
 
 const Songs = () => <div>Songs</div>;
-const Albums = () => <div>Albums</div>;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,7 +19,7 @@ root.render(
       <Routes>
         <Route path="/" element={<SongsRandom />} />
         <Route path="/songs" element={<Songs />} />
-        <Route path="/albums" element={<Albums />} />
+        <Route path="/albums" element={<AlbumAll />} />
         <Route path="/album/:albumId" element={<AlbumSongs />} />
         <Route path="/artists" element={<ArtistAll />} />
         <Route path="/artist/:artistId" element={<ArtistPage />} />

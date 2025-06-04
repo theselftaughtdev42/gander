@@ -3,7 +3,7 @@ import './AlbumGrid.css';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../config';
 
-const AlbumGrid = ({ albums }) => {
+const AlbumGrid = ({ albums, showArtist = false }) => {
   return (
     <div className='album-container'>
       {albums.map((album, i) => (
@@ -20,7 +20,12 @@ const AlbumGrid = ({ albums }) => {
             />
             <div className='album-name'>
               {album.name}
+            </div> 
+            { showArtist &&
+            <div className='album-artist-name'>
+              <i>{album.artist.name}</i>
             </div>        
+            }
           </Link>
         </div>
       ))}

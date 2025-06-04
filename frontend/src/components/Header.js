@@ -9,7 +9,7 @@ const Header = () => {
       <nav className="nav-links">
         <Link to="/">Random Songs</Link>
         <Link to="/songs">All Songs</Link>
-        <Link to="/albums">Albums</Link>
+        <Link to="/albums">All Albums</Link>
         <Link to="/artists">Artists</Link>
       </nav>
     </header>

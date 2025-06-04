@@ -35,7 +35,16 @@
 .album-name {
   margin-top: 0.5rem;
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  text-align: center;
+  word-wrap: break-word;
+  width: 100%;
+}
+
+.album-artist-name {
+  margin-top: 0.1rem;
+  color: #e2e2e2;
+  font-size: 0.7rem;
   text-align: center;
   word-wrap: break-word;
   width: 100%;
