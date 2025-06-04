@@ -11,6 +11,8 @@ class FilterQuery(BaseModel):
     moods: list[str] = []
     themes: list[str] = []
     instruments: list[str] = []
+    offset: int = 0
+    limit: int = 50
 
 
 router = APIRouter(
@@ -44,9 +46,19 @@ def read_instruments(*, session: Session = Depends(get_session)):
 
 
 @router.get("/songs", response_model=list[SongPublic])
-def search(*, session: Session = Depends(get_session), filters: Annotated[FilterQuery, Query()]):
+def search(
+    *,
+    session: Session = Depends(get_session),
+    filters: Annotated[FilterQuery, Query()],
+):
     if not filters.genres and not filters.moods and not filters.themes and not filters.instruments:
-        raise HTTPException(status_code=404, detail="No songs found")
+        songs = session.exec(
+            select(Song)
+            .order_by(Song.title)
+            .offset(filters.offset)
+            .limit(filters.limit)
+        ).all()
+        return songs
     
     # Workaround for not being able to run a query such as:
     # select(Song).where(genre in Song.genres)

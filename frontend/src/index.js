@@ -6,10 +6,10 @@ import Header from './components/Header';
 import SongsRandom from './components/SongsRandom';
 import ArtistAll from './components/ArtistAll';
 import AlbumAll from './components/AlbumAll'
+import SongsAll from './components/SongsAll';
 import ArtistPage from './components/ArtistPage';
 import AlbumSongs from './components/AlbumSongs';
 
-const Songs = () => <div>Songs</div>;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,7 +18,7 @@ root.render(
     <div className="container">
       <Routes>
         <Route path="/" element={<SongsRandom />} />
-        <Route path="/songs" element={<Songs />} />
+        <Route path="/songs" element={<SongsAll />} />
         <Route path="/albums" element={<AlbumAll />} />
         <Route path="/album/:albumId" element={<AlbumSongs />} />
         <Route path="/artists" element={<ArtistAll />} />
