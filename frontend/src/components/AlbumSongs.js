@@ -39,7 +39,7 @@ const AlbumSongs = () => {
           <Link
             to={`/artist/${album.artist?.id}`}
             key={album.artist?.id}
-            className='artist-link'
+            className='album-artist-link'
           >
             {" " + album.artist?.name}
           </Link>        

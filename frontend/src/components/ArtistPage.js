@@ -27,11 +27,11 @@ const ArtistPage = () => {
   if (!artist) return <div className="artist-page">Artist not found</div>;
 
   return (
-    <div className="page-title">
-      <h1>{artist.name}</h1>
-      <h2>Albums</h2>
+    <div>
+      <h1 className="page-title">{artist.name}</h1>
+      <h2 className="center">Albums</h2>
       <AlbumGrid albums={artist.albums}/>
-      <h2>TODO::All Songs</h2>
+      <h2 className="center">TODO::All Songs</h2>
     </div>
   );
 };

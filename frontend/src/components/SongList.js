@@ -3,6 +3,7 @@ import { FaPlay, FaPause, FaRegHeart, FaHeart } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
 import './SongList.css';
 import { API_URL } from '../config';
+import { Link } from 'react-router-dom';
 
 const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
   const audioRefs = useRef([]);
@@ -76,13 +77,21 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
     <div className="song-list">
       {songs.map((song, index) => (
         <div key={index} className="song-item">
-          {showAlbumArt && 
-          <img 
-            src={API_URL + "/album_art/NoAlbumArt.jpg"}
-            alt="Album Art"
-            className="album-art"
-          />
+
+          {
+          showAlbumArt && 
+          <Link
+            to={`/album/${song.album.id}`}
+            key={song.album.id}
+          >
+            <img 
+              src={API_URL + "/album_art/NoAlbumArt.jpg"}
+              alt="Album Art"
+              className="album-art"
+            />
+          </Link>
           }
+
           <button className="play-button" onClick={() => handleTogglePlay(index)}>
             {currentPlaying === index ? <FaPause /> : <FaPlay />}
           </button>
@@ -90,8 +99,20 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
           <div className="song-content">
             <div className="song-info">
                 <div className="song-title">{song.title}</div>
-                {showArtist && <div className="song-artist">{song.artist.name}</div>}
+
+                {
+                showArtist &&
+                <Link
+                  to={`/artist/${song.artist.id}`}
+                  key={song.artist.id}
+                  className='song-artist'
+                >
+                  {song.artist.name}
+                </Link>
+                }
+
             </div>
+
             <input
                 type="range"
                 min="0"
@@ -101,12 +122,15 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
                 onChange={(e) => handleSeek(index, e)}
                 className="seek-bar"
             />
+
             <div className="time-info">
               {formatTime(timeData[index]?.current)} / {formatTime(song.duration)}
             </div>
+
             <a href={API_URL + "/song_files/" + song.filepath} download className="download-button">
               <FiDownload />
             </a>
+
             <button className="favourite-button">
               {false ? <FaHeart /> : <FaRegHeart />}
             </button>

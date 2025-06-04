@@ -23,6 +23,13 @@ html, body, #root {
 }
 
 .page-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.center {
   text-align: center;
 }
 

@@ -1,0 +1,17 @@
+.reload-button {
+  display: flex;
+  background-color: #1e1e1e;
+  border: none;
+  cursor: pointer;
+  color: #bbb;
+  font-size: 1.5rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.reload-button:hover {
+  color: #4caf50;
+  transform: scale(1.1);
+}
