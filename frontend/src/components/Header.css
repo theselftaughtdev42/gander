@@ -1,0 +1,24 @@
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #282c34;
+    padding: 1rem 2rem;
+    color: white;
+  }
+  
+  .app-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .nav-links a {
+    margin-right: 2rem;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
+  
