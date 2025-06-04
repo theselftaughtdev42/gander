@@ -14,7 +14,7 @@ const AlbumSongs = () => {
       try {
         const res = await fetch(`${API_URL}/albums/${albumId}`); 
         const data = await res.json();
-        console.log(data)
+        data.songs.sort((a, b) => a.title.localeCompare(b.title));
 
         setAlbum(data);
       } catch (err) {
