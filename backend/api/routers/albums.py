@@ -12,10 +12,12 @@ router = APIRouter(
 
 @router.get("/", response_model=list[AlbumPublic])
 def read_albums(*, session: Session = Depends(get_session)):
-    albums = session.exec(select(Album)).all()
+    albums = session.exec(
+        select(Album).order_by(Album.name).offset(0).limit(20)
+    ).all()
     return albums
 
-@router.get("/{album_id}", response_model=AlbumPublicWithSongs)
+@router.get("/by_id/{album_id}", response_model=AlbumPublicWithSongs)
 def read_album(*, session: Session = Depends(get_session), album_id: uuid.UUID):
     album = session.get(Album, album_id)
     if not album:

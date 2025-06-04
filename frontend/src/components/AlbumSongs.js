@@ -12,7 +12,7 @@ const AlbumSongs = () => {
   useEffect(() => {
     const fetchAlbum = async () => {
       try {
-        const res = await fetch(`${API_URL}/albums/${albumId}`); 
+        const res = await fetch(`${API_URL}/albums/by_id/${albumId}`); 
         const data = await res.json();
         data.songs.sort((a, b) => a.title.localeCompare(b.title));
 
@@ -23,7 +23,7 @@ const AlbumSongs = () => {
     };
 
     fetchAlbum();
-  }, []);
+  }, [albumId]);
 
   return (
     <div>
