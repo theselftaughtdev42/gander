@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
-import { FaRandom, FaMusic, FaCompactDisc, FaUserAlt } from 'react-icons/fa';
+import { FaRandom, FaMusic, FaCompactDisc, FaUserAlt, FaHeart } from 'react-icons/fa';
 
 const Header = () => {
   return (
@@ -12,6 +12,7 @@ const Header = () => {
       </div>
       <nav className="nav-links">
         <Link to="/"><FaRandom /> Random</Link>
+        <Link to="/favourites"><FaHeart /> Favourites</Link>
         <Link to="/songs"><FaMusic /> Songs</Link>
         <Link to="/albums"><FaCompactDisc /> Albums</Link>
         <Link to="/artists"><FaUserAlt /> Artists</Link>

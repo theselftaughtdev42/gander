@@ -33,7 +33,9 @@ def read_song(*, session: Session = Depends(get_session), song_id: uuid.UUID):
 
 @router.get("/by_artist/{artist_id}", response_model=list[SongPublic])
 def read_song_by_artist(
-    *, session: Session = Depends(get_session), artist_id: uuid.UUID
+    *,
+    session: Session = Depends(get_session),
+    artist_id: uuid.UUID,
 ):
     song = session.exec(
         select(Song).where(Song.artist_id == artist_id).order_by(Song.title)
@@ -75,3 +77,19 @@ def favourite(
     session.add(song)
     session.commit()
     return song
+
+@router.get("/favourites", response_model=list[SongPublic])
+def read_favourite(
+    *,
+    session: Session = Depends(get_session),
+    offset: int = 0,
+    limit: int = 50,
+):
+    songs = session.exec(
+        select(Song)
+        .where(Song.favourite)
+        .order_by(Song.title)
+        .offset(offset)
+        .limit(limit)
+    ).all()
+    return songs

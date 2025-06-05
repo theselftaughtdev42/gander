@@ -9,6 +9,7 @@ import AlbumAll from './components/AlbumAll'
 import SongsAll from './components/SongsAll';
 import ArtistPage from './components/ArtistPage';
 import AlbumSongs from './components/AlbumSongs';
+import SongsFavourites from './components/SongsFavourites';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,6 +19,7 @@ root.render(
     <div className="container">
       <Routes>
         <Route path="/" element={<SongsRandom />} />
+        <Route path="/favourites" element={<SongsFavourites />} />
         <Route path="/songs" element={<SongsAll />} />
         <Route path="/albums" element={<AlbumAll />} />
         <Route path="/album/:albumId" element={<AlbumSongs />} />
