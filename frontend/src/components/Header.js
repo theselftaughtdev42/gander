@@ -1,16 +1,20 @@
 import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
+import { FaRandom, FaMusic, FaCompactDisc, FaUserAlt } from 'react-icons/fa';
 
 const Header = () => {
   return (
     <header className="app-header">
-      <h1 className="app-title">MyTunes</h1>
+      <div className="logo-app-name">
+        <img src="/logo.png" alt="Music Icon" className="my-tunes-logo" />
+        <h1 className="app-title">MyTunes</h1>
+      </div>
       <nav className="nav-links">
-        <Link to="/">Random Songs</Link>
-        <Link to="/songs">All Songs</Link>
-        <Link to="/albums">All Albums</Link>
-        <Link to="/artists">Artists</Link>
+        <Link to="/"><FaRandom /> Random</Link>
+        <Link to="/songs"><FaMusic /> Songs</Link>
+        <Link to="/albums"><FaCompactDisc /> Albums</Link>
+        <Link to="/artists"><FaUserAlt /> Artists</Link>
       </nav>
     </header>
   );

@@ -19,7 +19,7 @@ html, body, #root {
   background-color: #1e1e1e;
   display: flex;
   flex-direction: column;
-  color: white;
+  color: #fff;
 }
 
 .page-title {

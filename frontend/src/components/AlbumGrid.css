@@ -17,10 +17,7 @@
 .album-tile {
   height: 120px;
   width: 120px;
-  background-color: #2a2a2a;
   border-radius: 8px;
-  color: white;
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,7 +40,7 @@
 
 .album-artist-name {
   margin-top: 0.1rem;
-  color: #e2e2e2;
+  color: #bbb;
   font-size: 0.7rem;
   text-align: center;
   word-wrap: break-word;
@@ -52,6 +49,6 @@
 
 .album-link {
   text-decoration: none;
-  color: white;
+  color: #fff;
   font-weight: 500;
 }
