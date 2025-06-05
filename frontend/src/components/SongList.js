@@ -137,7 +137,7 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
               {formatTime(timeData[index]?.current)} / {formatTime(song.duration)}
             </div>
 
-            <a href={API_URL + "/song_files/" + encodeURIComponent(song.filepath)} download className="download-button">
+            <a href={`${API_URL}/songs/download/${encodeURIComponent(song.id)}`} download className="download-button">
               <FiDownload />
             </a>
 
@@ -151,7 +151,6 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
             onEnded={() => setCurrentPlaying(null)}
             preload="metadata"
           >
-            {/* <source type="audio/mpeg" /> */}
           </audio>
         </div>
       ))}

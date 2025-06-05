@@ -28,4 +28,3 @@ app.mount("/album_art", StaticFiles(directory="art"), name="album_art")
 @app.get("/")
 def root():
     return "Welcome to the Gander API!"
-
