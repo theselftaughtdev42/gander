@@ -21,6 +21,8 @@ const SongsAll = () => {
   const [instruments, setInstruments] = useState([]);
   const [selectedInstrument, setSelectedInstrument] = useState('');
 
+  const [sortOrder, setSortOrder] = useState('title_asc');
+
   const observer = useRef();
 
   const lastSongRef = useCallback(node => {
@@ -70,8 +72,10 @@ const SongsAll = () => {
         const moodParam = selectedMood ? `&mood=${encodeURIComponent(selectedMood)}` : '';
         const themeParam = selectedTheme ? `&theme=${encodeURIComponent(selectedTheme)}` : '';
         const instrumentParam = selectedInstrument ? `&instrument=${encodeURIComponent(selectedInstrument)}` : '';
+
+        const sortOrderParam = sortOrder ? `&sort_order=${encodeURIComponent(sortOrder)}` : '';
   
-        const res = await fetch(`${API_URL}/filter/songs/?offset=${offset}&limit=${LIMIT}${genreParam}${moodParam}${themeParam}${instrumentParam}`);
+        const res = await fetch(`${API_URL}/filter/songs?offset=${offset}&limit=${LIMIT}${genreParam}${moodParam}${themeParam}${instrumentParam}${sortOrderParam}`);
         const data = await res.json();
         console.log(data)
 
@@ -86,7 +90,7 @@ const SongsAll = () => {
 
     fetchSongs();
     // eslint-disable-next-line
-  }, [offset, selectedGenre, selectedMood, selectedTheme, selectedInstrument])
+  }, [offset, selectedGenre, selectedMood, selectedTheme, selectedInstrument, sortOrder])
 
   const handleGenreChange = (e) => {
     setSelectedGenre(e.target.value);
@@ -111,6 +115,13 @@ const SongsAll = () => {
 
   const handleInstrumentChange = (e) => {
     setSelectedInstrument(e.target.value);
+    setOffset(0);
+    setSongs([]);
+    setHasMore(true);
+  };
+
+  const handleSortOrderChange = (e) => {
+    setSortOrder(e.target.value);
     setOffset(0);
     setSongs([]);
     setHasMore(true);
@@ -159,6 +170,16 @@ const SongsAll = () => {
             {instruments.map(instrument => (
               <option key={instrument.name} value={instrument.name}>{instrument.name}</option>
             ))}
+          </select>
+        </div>
+
+        <div className="filter-item">
+          <label className="filter-title">Sort Order</label>
+          <select value={sortOrder} onChange={handleSortOrderChange} className="select-dark">
+            <option value="title_asc">Title (A-Z)</option>
+            <option value="title_desc">Title (Z-A)</option>
+            <option value="duration_asc">Duration (Short → Long)</option>
+            <option value="duration_desc">Duration (Long → Short)</option>
           </select>
         </div>
 

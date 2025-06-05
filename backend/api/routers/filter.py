@@ -15,7 +15,15 @@ from ..models import (
 )
 from sqlmodel import Session, select
 from pydantic import BaseModel
+from sqlalchemy import asc, desc
+from enum import Enum
+from operator import attrgetter
 
+class OrderBy(str, Enum):
+    title_asc = "title_asc"
+    title_desc = "title_desc"
+    duration_asc = "duration_asc"
+    duration_desc = "duration_desc"
 
 class FilterQuery(BaseModel):
     genre: str | None = None
@@ -24,6 +32,7 @@ class FilterQuery(BaseModel):
     instrument: str | None = None
     offset: int = 0
     limit: int = 50
+    sort_order: OrderBy = OrderBy.title_asc
 
 
 router = APIRouter(
@@ -68,9 +77,20 @@ def search(
         and not filters.theme
         and not filters.instrument
     ):
+        print("No filters applied. Querying all songs.")
+
+        sort_mapping = {
+            OrderBy.title_asc: asc(Song.title),
+            OrderBy.title_desc: desc(Song.title),
+            OrderBy.duration_asc: asc(Song.duration),
+            OrderBy.duration_desc: desc(Song.duration),
+        }
+
+        sort_order = sort_mapping.get(filters.sort_order, Song.title)
+
         songs = session.exec(
             select(Song)
-            .order_by(Song.title)
+            .order_by(sort_order)
             .offset(filters.offset)
             .limit(filters.limit)
         ).all()
@@ -110,8 +130,33 @@ def search(
 
     songs_in_all_filters = common_elements_ordered(*list_of_filter_songs)
 
-    print(f"total found: {len(songs_in_all_filters)}")
-    songs = songs_in_all_filters[filters.offset : filters.offset + filters.limit]
+    # apply ordering
+    sorted_songs = []
+    if filters.sort_order == OrderBy.title_asc:
+        sorted_songs = sorted(
+            songs_in_all_filters,
+            key=attrgetter("title"),
+        )
+    if filters.sort_order == OrderBy.title_desc:
+        sorted_songs = sorted(
+            songs_in_all_filters,
+            key=attrgetter("title"),
+            reverse=True,
+        )
+    if filters.sort_order == OrderBy.duration_asc:
+        sorted_songs = sorted(
+            songs_in_all_filters,
+            key=attrgetter("duration"),
+        )
+    if filters.sort_order == OrderBy.duration_desc:
+        sorted_songs = sorted(
+            songs_in_all_filters,
+            key=attrgetter("duration"),
+            reverse=True,
+        )
+
+    print(f"total found: {len(sorted_songs)}")
+    songs = sorted_songs[filters.offset : filters.offset + filters.limit]
     print(f"offset amount: {len(songs)}")
 
     return songs
