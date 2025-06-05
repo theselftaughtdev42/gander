@@ -14,7 +14,7 @@ const AlbumGrid = ({ albums, showArtist = false }) => {
             className='album-link'
           >
             <img 
-              src={API_URL + "/album_art/NoAlbumArt.jpg"}
+              src={`${API_URL}/album_art/${album.art_filepath}`}
               alt="Album Art"
               className="album-tile"
             />

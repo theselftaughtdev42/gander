@@ -29,7 +29,7 @@ const AlbumSongs = () => {
     <div>
       <h1 className='page-title'>{album.name}</h1>
       <img 
-        src={API_URL + "/album_art/NoAlbumArt.jpg"}
+        src={`${API_URL}/album_art/${album.art_filepath}`}
         alt="Album Art"
         className="main-album-art"
       />

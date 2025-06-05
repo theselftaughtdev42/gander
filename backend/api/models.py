@@ -200,6 +200,7 @@ class ArtistPublicWithAlbums(ArtistPublic):
 
 class AlbumBase(SQLModel):
     name: str = Field(index=True)
+    art_filepath: str
 
 
 class Album(AlbumBase, table=True):

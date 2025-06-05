@@ -95,7 +95,7 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
             key={song.album.id}
           >
             <img 
-              src={API_URL + "/album_art/NoAlbumArt.jpg"}
+              src={`${API_URL}/album_art/${song.album.art_filepath}`}
               alt="Album Art"
               className="album-art"
             />

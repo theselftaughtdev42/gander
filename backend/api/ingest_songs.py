@@ -121,7 +121,15 @@ def load_artists_and_albums():
             artist = session.exec(select(Artist).where(Artist.name == raw_artist)).one()
 
         if raw_album not in albums_done:
-            album = Album(name=raw_album, artist=artist)
+            album_art_filepath = dir.name.replace(" ", "_") + ".jpg"
+            if not Path("art", album_art_filepath).exists():
+                album_art_filepath = "NoAlbumArt.jpg"
+
+            album = Album(
+                name=raw_album,
+                artist=artist,
+                art_filepath=album_art_filepath,
+            )
             session.add(album)
             session.commit()
             session.refresh(album)
