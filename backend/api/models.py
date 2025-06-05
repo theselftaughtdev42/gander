@@ -222,6 +222,7 @@ class AlbumPublicWithSongs(AlbumPublic):
 class SongBase(SQLModel):
     title: str = Field(index=True)
     duration: float
+    favourite: bool = False
 
 
 class Song(SongBase, table=True):

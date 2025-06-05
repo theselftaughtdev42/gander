@@ -8,9 +8,17 @@ import { Link } from 'react-router-dom';
 const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
   const audioRefs = useRef([]);
   const [currentPlaying, setCurrentPlaying] = useState(null);
-  const [progress, setProgress] = useState({}); // { index: currentTime }
-  const [timeData, setTimeData] = useState({}); // { index: { current, duration } }
+  const [progress, setProgress] = useState({});
+  const [timeData, setTimeData] = useState({});
+  const [favourites, setFavourites] = useState({})
 
+  useEffect(() => {
+    const favourites = {};
+    songs.forEach((song, i) => {
+      favourites[i] = song.favourite;
+    });
+    setFavourites(favourites);
+  }, [songs]);
 
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return '0:00';
@@ -83,6 +91,25 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
     setProgress((prev) => ({ ...prev, [index]: e.target.value }));
   };
 
+  const handleToggleFavourite = async (index) => {
+    const song = songs[index];
+    const newStatus = !favourites[index];
+    setFavourites((prev) => ({ ...prev, [index]: newStatus }));
+
+    try {
+      await fetch(`${API_URL}/songs/favourite`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ song_id: song.id, favourite: newStatus }),
+      });
+    } catch (err) {
+      console.error('Failed to update favourite', err);
+      setFavourites((prev) => ({ ...prev, [index]: !newStatus })); // rollback
+    }
+  };
+
   return (
     <div className="song-list">
       {songs.map((song, index) => (
@@ -141,9 +168,14 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
               <FiDownload />
             </a>
 
-            <button className="favourite-button">
-              {false ? <FaHeart /> : <FaRegHeart />}
+
+            <button
+              className={`favourite-button ${favourites[index] ? 'active' : ''}`}
+              onClick={() => handleToggleFavourite(index)}
+            >
+              {favourites[index] ? <FaHeart /> : <FaRegHeart />}
             </button>
+
           </div>
 
           <audio

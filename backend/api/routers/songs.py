@@ -6,7 +6,11 @@ from sqlmodel import Session, select
 from sqlalchemy.sql import func
 import uuid
 from pathlib import Path
+from pydantic import BaseModel
 
+class FavouriteSong(BaseModel):
+    song_id: uuid.UUID
+    favourite: bool
 
 router = APIRouter(
     prefix="/songs",
@@ -58,3 +62,16 @@ def download_song(*, session: Session = Depends(get_session), song_id: uuid.UUID
         media_type="application/octet-stream",
         filename=f"{song.title} - by {song.artist.name}",
     )
+
+
+@router.post("/favourite", response_model=SongPublic)
+def favourite(
+    *,
+    session: Session = Depends(get_session),
+    update: FavouriteSong,
+):
+    song = session.get(Song, update.song_id)
+    song.favourite = update.favourite
+    session.add(song)
+    session.commit()
+    return song

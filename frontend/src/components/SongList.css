@@ -48,13 +48,12 @@
   cursor: pointer;
   color: #bbb;
   font-size: 1.5rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.2s ease;
   display: flex;
 }
 
 .favourite-button:hover {
   transform: scale(1.1);
-  color: #ff4d4f;
 }
 
 .favourite-button.active {
