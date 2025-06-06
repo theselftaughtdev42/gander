@@ -177,7 +177,11 @@ def search(
     session: Session = Depends(get_session),
     terms: str = "",
 ):
+    if len(terms) < 1:
+        return SearchResponse()
+
     words = terms.split(" ")
+
     artists = session.exec(
         select(Artist).where(or_(*[Artist.name.contains(word) for word in words]))
     ).all()
