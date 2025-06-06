@@ -5,7 +5,12 @@ import { Link } from 'react-router-dom';
 const ArtistGrid = ({ artists }) => {
   return (
     <div className='artist-container'>
-      {artists.map((artist, i) => (
+      {artists.length === 0
+      ?
+        <p className="nothing-found-message">No artists found 🤨</p>
+      :
+      
+      artists.map((artist, i) => (
         <Link
           to={`/artist/${artist.id}`}
           key={artist.id}

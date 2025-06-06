@@ -6,7 +6,11 @@ import { API_URL } from '../config';
 const AlbumGrid = ({ albums, showArtist = false }) => {
   return (
     <div className='album-container'>
-      {albums.map((album, i) => (
+      {albums.length === 0
+      ?
+        <p className="nothing-found-message">No albums found 😢</p>
+      :
+      albums.map((album, i) => (
         <div key={album.id} className='album-card'>
           <Link
             to={`/album/${encodeURIComponent(album.id)}`}

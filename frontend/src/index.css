@@ -39,3 +39,9 @@ html, body, #root {
   max-width: 1000px;
   min-height: 100vh;
 }
+
+.nothing-found-message {
+  text-align: center;
+  padding: 2rem;
+  font-size: 2rem;
+}

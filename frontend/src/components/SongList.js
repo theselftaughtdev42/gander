@@ -113,7 +113,11 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
 
   return (
     <div className="song-list">
-      {songs.map((song, index) => (
+      {songs.length === 0
+      ?
+        <p className="nothing-found-message">No songs found 😭</p>
+      :
+      songs.map((song, index) => (
         <div key={index} className="song-item">
 
           {
