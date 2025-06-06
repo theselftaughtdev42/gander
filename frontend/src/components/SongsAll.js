@@ -44,18 +44,22 @@ const SongsAll = () => {
         const g_res = await fetch(`${API_URL}/filter/genres`);
         const g_data = await g_res.json();
         setGenres(g_data);
-
+        console.log(g_data)
+        
         const m_res = await fetch(`${API_URL}/filter/moods`);
         const m_data = await m_res.json();
         setMoods(m_data);
-
+        console.log(m_data)
+        
         const t_res = await fetch(`${API_URL}/filter/themes`);
         const t_data = await t_res.json();
         setThemes(t_data);
-
+        console.log(t_data)
+        
         const i_res = await fetch(`${API_URL}/filter/instruments`);
         const i_data = await i_res.json();
         setInstruments(i_data);
+        console.log(i_data)
       } catch (err) {
         console.error('Error fetching genres', err);
       }

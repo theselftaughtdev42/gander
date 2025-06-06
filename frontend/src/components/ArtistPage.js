@@ -15,6 +15,7 @@ const ArtistPage = () => {
       try {
         const response = await fetch(`${API_URL}/artists/${encodeURIComponent(artistId)}`);
         const data = await response.json();
+        console.log(data)
 
         setArtist(data);
       } catch (err) {
@@ -27,6 +28,7 @@ const ArtistPage = () => {
       try {
         const response = await fetch(`${API_URL}/songs/by_artist/${encodeURIComponent(artistId)}`);
         const data = await response.json();
+        console.log(data)
 
         setArtistSongs(data);
       } catch (err) {

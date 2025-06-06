@@ -11,6 +11,7 @@ const SongsRandom = () => {
     try {
       const res = await fetch(`${API_URL}/songs/random/10`); 
       const data = await res.json();
+      console.log(data)
 
       console.log(data)
 
