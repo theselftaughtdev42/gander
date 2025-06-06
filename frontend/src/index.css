@@ -29,6 +29,13 @@ html, body, #root {
   gap: 0.5rem;
 }
 
+.secondary-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
 .center {
   text-align: center;
 }

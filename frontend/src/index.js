@@ -10,6 +10,7 @@ import SongsAll from './components/SongsAll';
 import ArtistPage from './components/ArtistPage';
 import AlbumSongs from './components/AlbumSongs';
 import SongsFavourites from './components/SongsFavourites';
+import Search from './components/Search';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,6 +26,7 @@ root.render(
         <Route path="/album/:albumId" element={<AlbumSongs />} />
         <Route path="/artists" element={<ArtistAll />} />
         <Route path="/artist/:artistId" element={<ArtistPage />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </div>
   </Router>
