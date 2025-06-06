@@ -120,7 +120,7 @@ def load_artists_and_albums():
         else:
             artist = session.exec(select(Artist).where(Artist.name == raw_artist)).one()
 
-        if raw_album not in albums_done:
+        if f"{raw_artist}-{raw_album}" not in albums_done:
             album_art_filepath = dir.name.replace(" ", "_") + ".jpg"
             if not Path("art", album_art_filepath).exists():
                 album_art_filepath = "NoAlbumArt.jpg"
@@ -134,7 +134,7 @@ def load_artists_and_albums():
             session.commit()
             session.refresh(album)
             session.refresh(artist)
-            albums_done.append(raw_album)
+            albums_done.append(f"{raw_artist}-{raw_album}")
 
 
 def load_songs():
@@ -152,7 +152,11 @@ def load_songs():
                     artist = session.exec(
                         select(Artist).where(Artist.name == artist)
                     ).one()
-                    album = session.exec(select(Album).where(Album.name == album)).one()
+                    album = session.exec(
+                        select(Album)
+                        .where(Album.artist_id == artist.id)
+                        .where(Album.name == album)
+                    ).one()
 
                     raw_genres = ["None"] if tag.genre is None else tag.genre.split(",")
                     raw_genres = [genre.strip().lower() for genre in raw_genres]
