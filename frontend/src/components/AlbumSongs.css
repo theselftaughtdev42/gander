@@ -1,6 +1,7 @@
 .main-album-art {
-  height: 250px;
-  width: 250px;
+  height: 200px;
+  width: 200px;
+  border-radius: 16px;
   display: block;
   margin: 0 auto;
 }
