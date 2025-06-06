@@ -29,17 +29,18 @@ const AlbumSongs = () => {
   return (
     <div>
       <h1 className='page-title'>{album.name}</h1>
-      <img 
-        src={`${API_URL}/album_art/${encodeURIComponent(album.art_filepath)}`}
-        alt="Album Art"
-        className="main-album-art"
-      />
+      {album.art_filepath && (
+        <img 
+          src={`${API_URL}/album_art/${encodeURIComponent(album.art_filepath)}`}
+          alt="Album Art"
+          className="main-album-art"
+        />
+      )}
       <p className='page-title'>
         By 
         {album.artist &&
           <Link
             to={`/artist/${album.artist?.id}`}
-            key={album.artist?.id}
             className='album-artist-link'
           >
             {" " + album.artist?.name}
