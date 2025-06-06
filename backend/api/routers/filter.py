@@ -2,6 +2,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query
 from ..dependencies import get_session
 from ..models import (
+    Artist,
+    ArtistPublic,
+    Album,
+    AlbumPublic,
     Genre,
     GenrePublic,
     Mood,
@@ -15,7 +19,7 @@ from ..models import (
 )
 from sqlmodel import Session, select
 from pydantic import BaseModel
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, or_
 from enum import Enum
 from operator import attrgetter
 
@@ -33,6 +37,11 @@ class FilterQuery(BaseModel):
     offset: int = 0
     limit: int = 50
     sort_order: OrderBy = OrderBy.title_asc
+
+class SearchResponse(BaseModel):
+    artists: list[ArtistPublic] = []
+    albums: list[AlbumPublic] = []
+    songs: list[SongPublic] = []
 
 
 router = APIRouter(
@@ -66,7 +75,7 @@ def read_instruments(*, session: Session = Depends(get_session)):
 
 
 @router.get("/songs", response_model=list[SongPublic])
-def search(
+def songs(
     *,
     session: Session = Depends(get_session),
     filters: Annotated[FilterQuery, Query()],
@@ -160,3 +169,29 @@ def search(
     print(f"offset amount: {len(songs)}")
 
     return songs
+
+
+@router.get("/search", response_model=SearchResponse)
+def search(
+    *,
+    session: Session = Depends(get_session),
+    terms: str = "",
+):
+    words = terms.split(" ")
+    artists = session.exec(
+        select(Artist).where(or_(*[Artist.name.contains(word) for word in words]))
+    ).all()
+
+    albums = session.exec(
+        select(Album).where(or_(*[Album.name.contains(word) for word in words]))
+    ).all()
+
+    songs = session.exec(
+        select(Song).where(or_(*[Song.title.contains(word) for word in words]))
+    ).all()
+
+    return {
+        "artists": artists,
+        "albums": albums,
+        "songs": songs,
+    }
