@@ -28,7 +28,7 @@ const SongsRandom = () => {
   return (
     <div>
       <h1 className='page-title'>
-        Random Songs
+        A Random Selection
         <button onClick={fetchSongs} title="Reload" className="reload-button">
           <FaSyncAlt />
         </button>
