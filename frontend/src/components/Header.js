@@ -7,8 +7,10 @@ const Header = () => {
   return (
     <header className="app-header">
       <div className="logo-app-name">
-        <img src="/logo.png" alt="Music Icon" className="my-tunes-logo" />
-        <h1 className="app-title">MyTunes</h1>
+        <Link to="/">
+          <img src="/logo.png" alt="Music Icon" className="my-tunes-logo" />
+        </Link>
+        <h1 className="app-title">MyTunes</h1>        
       </div>
       <nav className="nav-links">
         <Link to="/"><FaRandom /> Random</Link>
