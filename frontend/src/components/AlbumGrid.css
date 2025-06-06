@@ -21,11 +21,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: grayscale(40%);
-  transition: filter 0.2s ease, transform 0.2s ease;
+  transition: transform 0.2s ease;
 }
 .album-tile:hover {
-  filter: grayscale(0%);
   transform: scale(1.05);
 }
 
