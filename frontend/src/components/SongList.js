@@ -86,6 +86,7 @@ const SongList = ({ songs, showArtist = true, showAlbumArt = true }) => {
   
 
   const handleSeek = (index, e) => {
+    if (currentPlaying !== index) return;
     const newTime = e.target.value * audioRefs.current[index].duration;
     audioRefs.current[index].currentTime = newTime;
     setProgress((prev) => ({ ...prev, [index]: e.target.value }));
