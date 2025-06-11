@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ArtistGrid from './ArtistGrid';
 import AlbumGrid from './AlbumGrid';
 import SongList from './SongList';
+import { FaSearch } from 'react-icons/fa';
 import './Search.css'
 
 const Search = () => {
@@ -44,6 +45,10 @@ const Search = () => {
     }
   };
 
+  const handleSearchButton = (e) => {
+    setSearchTrigger(query);
+  }
+
   return (
     <div>
       <h1 className='page-title'>Search</h1>
@@ -56,6 +61,9 @@ const Search = () => {
           onKeyDown={handleKeyDown}
           className="search-bar"
         />
+        <button onClick={handleSearchButton} title="Trigger a search" className="search-button">
+          <FaSearch />
+        </button>
       </div>
       {
       artists.length > 0

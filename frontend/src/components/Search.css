@@ -1,5 +1,4 @@
 .search-bar {
-  margin-bottom: 1rem;
   padding: 1rem;
   width: 80%;
   border-radius: 32px;
@@ -9,9 +8,29 @@
   font-size: 1rem;
   font-weight: 600;
   text-align: center;
+  margin: .5rem;
 }
 
 .search-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-button {
+  display: flex;
+  background-color: #1e1e1e;
+  border: none;
+  cursor: pointer;
+  color: #bbb;
+  font-size: 2.5rem;
+  text-decoration: none;
+  display: flex;
+  justify-content:center;
+  transition: color 0.2s ease;
+}
+
+.search-button:hover {
+  color: #00899d;
 }
