@@ -10,7 +10,7 @@ const Header = () => {
         <Link to="/">
           <img src="/logo.png" alt="Music Icon" className="my-tunes-logo" />
         </Link>
-        <h1 className="app-title">MyTunes</h1>        
+        <h1 className="app-title">Gander</h1>        
       </div>
       <nav className="nav-links">
         <Link to="/search"><FaSearch /> Search</Link>
