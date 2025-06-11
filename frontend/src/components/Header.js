@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FaRandom, FaMusic, FaCompactDisc, FaUserAlt, FaHeart, FaSearch } from 'react-icons/fa';
 
 const Header = () => {
@@ -13,12 +13,12 @@ const Header = () => {
         <h1 className="app-title">Gander</h1>        
       </div>
       <nav className="nav-links">
-        <Link to="/search"><FaSearch /> Search</Link>
-        <Link to="/"><FaRandom /> Random</Link>
-        <Link to="/favourites"><FaHeart /> Favourites</Link>
-        <Link to="/songs"><FaMusic /> Songs</Link>
-        <Link to="/albums"><FaCompactDisc /> Albums</Link>
-        <Link to="/artists"><FaUserAlt /> Artists</Link>
+        <NavLink to="/" className={({ isActive }) => isActive ? 'active' : ''}><FaRandom /> Random</NavLink>
+        <NavLink to="/favourites" className={({ isActive }) => isActive ? 'active' : ''}><FaHeart /> Favourites</NavLink>
+        <NavLink to="/songs" className={({ isActive }) => isActive ? 'active' : ''}><FaMusic /> Songs</NavLink>
+        <NavLink to="/albums" className={({ isActive }) => isActive ? 'active' : ''}><FaCompactDisc /> Albums</NavLink>
+        <NavLink to="/artists" className={({ isActive }) => isActive ? 'active' : ''}><FaUserAlt /> Artists</NavLink>
+        <NavLink to="/search" className={({ isActive }) => isActive ? 'active' : ''}><FaSearch /> Search</NavLink>
       </nav>
     </header>
   );
