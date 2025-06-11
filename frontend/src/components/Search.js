@@ -73,7 +73,7 @@ const Search = () => {
         <ArtistGrid artists={artists} />
       </>
       :
-        <h2 className="secondary-title">No Artists Match</h2>
+        <h2 className="secondary-title search-not-found">No Artists Found</h2>
       }
 
       {
@@ -84,7 +84,7 @@ const Search = () => {
         <AlbumGrid albums={albums} />
       </>
       :
-        <h2 className="secondary-title">No Albums Match</h2>
+        <h2 className="secondary-title search-not-found">No Albums Found</h2>
       }
 
       {
@@ -95,7 +95,7 @@ const Search = () => {
         <SongList songs={songs} showAlbumArt={true} showArtist={true} />
       </>
       :
-        <h2 className="secondary-title">No Songs Match</h2>
+        <h2 className="secondary-title search-not-found">No Songs Found</h2>
       }
     </div>
   );

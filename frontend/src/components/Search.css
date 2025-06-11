@@ -34,3 +34,8 @@
 .search-button:hover {
   color: #00899d;
 }
+
+.search-not-found {
+  color: #bbb;
+  font-style: italic;
+}
