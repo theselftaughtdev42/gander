@@ -2,8 +2,9 @@ import React from 'react';
 import './AlbumGrid.css';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../config';
+import HighlightedName from './HighlightedName'
 
-const AlbumGrid = ({ albums, showArtist = false }) => {
+const AlbumGrid = ({ albums, showArtist = false, highlightText = '' }) => {
   return (
     <div className='album-container'>
       {albums.length === 0
@@ -23,7 +24,7 @@ const AlbumGrid = ({ albums, showArtist = false }) => {
               className="album-tile"
             />
             <div className='album-name'>
-              {album.name}
+            <HighlightedName name={album.name} highlightedText={highlightText} />
             </div> 
             { showArtist &&
             <div className='album-artist-name'>

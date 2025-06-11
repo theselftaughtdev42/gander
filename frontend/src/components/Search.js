@@ -12,6 +12,7 @@ const Search = () => {
   const [songs, setSongs] = useState([]);
   const [query, setQuery] = useState('');
   const [searchTrigger, setSearchTrigger] = useState('');
+  const [highlightedText, setHighlightedText] = useState('');
 
   const fetchSearch = async (terms) => {
     try {
@@ -29,11 +30,8 @@ const Search = () => {
 
   useEffect(() => {
     fetchSearch(searchTrigger);
+    setHighlightedText(searchTrigger)
   }, [searchTrigger]);
-
-  useEffect(() => {
-    fetchSearch();
-  }, [])
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -70,7 +68,7 @@ const Search = () => {
       ?
       <>
         <h2 className="secondary-title">Artists</h2>
-        <ArtistGrid artists={artists} />
+        <ArtistGrid artists={artists} highlightText={highlightedText} />
       </>
       :
         <h2 className="secondary-title search-not-found">No Artists Found</h2>
@@ -81,7 +79,7 @@ const Search = () => {
       ?
       <>
         <h2 className="secondary-title">Albums</h2>
-        <AlbumGrid albums={albums} />
+        <AlbumGrid albums={albums} highlightText={highlightedText} />
       </>
       :
         <h2 className="secondary-title search-not-found">No Albums Found</h2>
@@ -92,7 +90,7 @@ const Search = () => {
       ?
       <>
         <h2 className="secondary-title">Songs</h2>
-        <SongList songs={songs} showAlbumArt={true} showArtist={true} />
+        <SongList songs={songs} showAlbumArt={true} showArtist={true} highlightText={highlightedText} />
       </>
       :
         <h2 className="secondary-title search-not-found">No Songs Found</h2>

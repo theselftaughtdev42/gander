@@ -1,8 +1,11 @@
 import React from 'react';
 import './ArtistGrid.css';
 import { Link } from 'react-router-dom';
+import HighlightedName from './HighlightedName'
 
-const ArtistGrid = ({ artists }) => {
+
+const ArtistGrid = ({ artists, highlightText = '' }) => {
+
   return (
     <div className='artist-container'>
       {artists.length === 0
@@ -17,7 +20,7 @@ const ArtistGrid = ({ artists }) => {
           className='artist-link'
         >
           <div key={artist.id} className='artist-tile'>
-          {artist.name}
+            <HighlightedName name={artist.name} highlightedText={highlightText} />
           </div>        
         </Link>
       ))}
