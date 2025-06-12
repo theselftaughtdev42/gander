@@ -6,22 +6,50 @@
   justify-content: center;
 }
 
-.artist-tile {
+.artist-tile, .no-profile-artist-tile {
+  position: relative;
   height: 120px;
   width: 120px;
-  background-color: #2a2a2a;
-  border-radius: 8px;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
+  background-color: #2a2a2a;
+  padding: 1rem;
+}
+
+.artist-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  transition: background 0.2s ease;
+}
+
+.artist-tile:hover::after {
+  background: rgba(0, 0, 0, 0);
 }
 
 .artist-link {
   text-decoration: none;
+}
+
+.artist-name, .no-artist-name {
+  position: relative;
+  z-index: 2;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* extra clarity */
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  transition: opacity 0.3s ease;
+}
+
+.artist-tile:hover .artist-name {
+  opacity: 0;
 }

@@ -5,6 +5,7 @@ import requests
 SUPPORTED_EXTS = ('.mp3', '.flac', '.m4a', '.ogg', '.wav')
 ART_TRACKER = Path("art/_tracker")
 NO_ART_TRACKER = Path("art/_no_tracker")
+Path("art").mkdir(exist_ok=True)
 
 def main():
     ART_TRACKER.touch()

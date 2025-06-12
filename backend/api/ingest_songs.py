@@ -110,9 +110,13 @@ def load_artists_and_albums():
 
     for dir in [d for d in Path("./music").iterdir() if d.is_dir()]:
         raw_artist, raw_album = dir.name.split(" - ")
+        profile_pic = f"{raw_artist}.jpg"
+        if not Path("pics", profile_pic).exists():
+            print(f"No profile pic for {profile_pic}")
+            profile_pic = None
 
         if raw_artist not in artists_done:
-            artist = Artist(name=raw_artist)
+            artist = Artist(name=raw_artist, profile_pic_filepath=profile_pic)
             session.add(artist)
             session.commit()
             session.refresh(artist)

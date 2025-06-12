@@ -2,6 +2,7 @@ import React from 'react';
 import './ArtistGrid.css';
 import { Link } from 'react-router-dom';
 import HighlightedName from './HighlightedName'
+import { API_URL } from '../config';
 
 
 const ArtistGrid = ({ artists, highlightText = '' }) => {
@@ -19,9 +20,26 @@ const ArtistGrid = ({ artists, highlightText = '' }) => {
           key={artist.id}
           className='artist-link'
         >
-          <div key={artist.id} className='artist-tile'>
-            <HighlightedName name={artist.name} highlightedText={highlightText} />
-          </div>        
+          <div
+            className={
+              artist.profile_pic_filepath
+                ? 'artist-tile'
+                : 'no-profile-artist-tile'
+            }
+            style={
+              artist.profile_pic_filepath
+                ? { backgroundImage: `url(${API_URL}/profile_pics/${encodeURIComponent(artist.profile_pic_filepath)})` }
+                : {}
+            }
+          >
+            <div className={
+              artist.profile_pic_filepath
+                ? 'artist-name'
+                : 'no-artist-name'
+            }>
+              <HighlightedName name={artist.name} highlightedText={highlightText} />
+            </div>
+          </div>
         </Link>
       ))}
     </div>

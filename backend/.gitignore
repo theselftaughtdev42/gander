@@ -4,5 +4,6 @@ genre_data.json
 song_data.json
 .DS_Store
 art
+pics
 database.db
 __pycache__

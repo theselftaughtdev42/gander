@@ -23,6 +23,7 @@ app.include_router(filter.router)
 
 app.mount("/song_files", StaticFiles(directory="music"), name="song_files")
 app.mount("/album_art", StaticFiles(directory="art"), name="album_art")
+app.mount("/profile_pics", StaticFiles(directory="pics"), name="profile_pics")
 
 
 @app.get("/")

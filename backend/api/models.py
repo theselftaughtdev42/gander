@@ -182,6 +182,7 @@ class InstrumentPublic(InstrumentBase):
 
 class ArtistBase(SQLModel):
     name: str = Field(index=True)
+    profile_pic_filepath: str | None
 
 
 class Artist(ArtistBase, table=True):
