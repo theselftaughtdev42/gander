@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { API_URL } from '../config';
 import HighlightedName from './HighlightedName'
 
-const AlbumGrid = ({ albums, showArtist = false, highlightText = '' }) => {
+const AlbumGrid = ({ albums, showArtist = false, highlightText = '', loading }) => {
+  if (loading) return null;
+  
   return (
     <div className='album-container'>
       {albums.length === 0

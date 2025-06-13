@@ -9,6 +9,8 @@ const ArtistPage = () => {
   const { artistId } = useParams();
   const [artist, setArtist] = useState(null);
   const [artistSongs, setArtistSongs] = useState(null)
+  const [loadingArtist, setLoadingArtist] = useState(true);
+  const [loadingSongs, setLoadingSongs] = useState(true);
 
   useEffect(() => {
     const fetchArtist = async () => {
@@ -18,6 +20,7 @@ const ArtistPage = () => {
         console.log(data)
 
         setArtist(data);
+        setLoadingArtist(false)
       } catch (err) {
         console.error('Error loading artist', err);
         setArtist(null);
@@ -31,6 +34,7 @@ const ArtistPage = () => {
         console.log(data)
 
         setArtistSongs(data);
+        setLoadingSongs(false)
       } catch (err) {
         console.error('Error loading artist songs', err);
         setArtistSongs(null);
@@ -41,7 +45,7 @@ const ArtistPage = () => {
     fetchArtistSongs();
   }, [artistId]);
 
-  if (!artist) return <div className="artist-page">Artist not found</div>;
+  if (loadingArtist) return null;
 
   return (
     <div>
@@ -55,10 +59,10 @@ const ArtistPage = () => {
       </div>
 
       <h2 className="center">Albums</h2>
-      <AlbumGrid albums={artist.albums}/>
+      <AlbumGrid albums={artist.albums} loading={loadingArtist}/>
 
       <h2 className="center">All Songs</h2>
-      {artistSongs && <SongList songs={artistSongs} showArtist={false} />}
+      {artistSongs && <SongList songs={artistSongs} showArtist={false} loading={loadingSongs} />}
     </div>
   );
 };

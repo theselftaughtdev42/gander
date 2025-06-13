@@ -13,6 +13,7 @@ const Search = () => {
   const [query, setQuery] = useState('');
   const [searchTrigger, setSearchTrigger] = useState('');
   const [highlightedText, setHighlightedText] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const fetchSearch = async (terms) => {
     try {
@@ -23,6 +24,7 @@ const Search = () => {
       setArtists(data.artists)
       setAlbums(data.albums)
       setSongs(data.songs)
+      setLoading(false);
     } catch (err) {
       console.error('Error fetching search results', err)
     }
@@ -68,7 +70,7 @@ const Search = () => {
       ?
       <>
         <h2 className="secondary-title">Artists</h2>
-        <ArtistGrid artists={artists} highlightText={highlightedText} />
+        <ArtistGrid artists={artists} highlightText={highlightedText} loading={loading} />
       </>
       :
         <h2 className="secondary-title search-not-found">No Artists Found</h2>
@@ -79,7 +81,7 @@ const Search = () => {
       ?
       <>
         <h2 className="secondary-title">Albums</h2>
-        <AlbumGrid albums={albums} highlightText={highlightedText} />
+        <AlbumGrid albums={albums} highlightText={highlightedText} loading={loading} />
       </>
       :
         <h2 className="secondary-title search-not-found">No Albums Found</h2>
@@ -90,7 +92,7 @@ const Search = () => {
       ?
       <>
         <h2 className="secondary-title">Songs</h2>
-        <SongList songs={songs} showAlbumArt={true} showArtist={true} highlightText={highlightedText} />
+        <SongList songs={songs} showAlbumArt={true} showArtist={true} highlightText={highlightedText} loading={loading} />
       </>
       :
         <h2 className="secondary-title search-not-found">No Songs Found</h2>

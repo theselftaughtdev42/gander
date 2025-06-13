@@ -10,7 +10,8 @@ const SongsAll = () => {
   const [songs, setSongs] = useState([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [genres, setGenres] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState('');
@@ -26,7 +27,7 @@ const SongsAll = () => {
   const observer = useRef();
 
   const lastSongRef = useCallback(node => {
-    if (loading || !hasMore) return;
+    if (fetching || !hasMore) return;
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
@@ -36,7 +37,7 @@ const SongsAll = () => {
       rootMargin: '500px', // <- trigger before entering viewport
     });
     if (node) observer.current.observe(node);
-  }, [loading, hasMore]);
+  }, [fetching, hasMore]);
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -69,7 +70,8 @@ const SongsAll = () => {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      if (loading) return;
+      if (fetching) return;
+      setFetching(true);
       setLoading(true);
       try {
         const genreParam = selectedGenre ? `&genre=${encodeURIComponent(selectedGenre)}` : '';
@@ -84,11 +86,12 @@ const SongsAll = () => {
         console.log(data)
 
         setSongs(prev => [...prev, ...data]);
+        setLoading(false);
         if (data.length < LIMIT) setHasMore(false);
       } catch (err) {
         console.error('Error fetching Albums', err)
       } finally {
-        setLoading(false);
+        setFetching(false);
       }
     };
 
@@ -189,7 +192,7 @@ const SongsAll = () => {
 
       </div>
 
-      <SongList songs={songs} />
+      <SongList songs={songs} loading={loading} />
       <div ref={lastSongRef} style={{ height: '1px' }}></div>
     </div>
   );

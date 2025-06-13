@@ -5,7 +5,9 @@ import HighlightedName from './HighlightedName'
 import { API_URL } from '../config';
 
 
-const ArtistGrid = ({ artists, highlightText = '' }) => {
+const ArtistGrid = ({ artists, highlightText = '', loading }) => {
+
+  if (loading) return null;
 
   return (
     <div className='artist-container'>

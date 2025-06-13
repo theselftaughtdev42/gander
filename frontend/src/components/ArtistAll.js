@@ -4,6 +4,7 @@ import ArtistGrid from './ArtistGrid';
 
 const ArtistAll = () => {
   const [artists, setArtists] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchArtists = async () => {
@@ -13,6 +14,7 @@ const ArtistAll = () => {
         console.log(data)
 
         setArtists(data)
+        setLoading(false);
       } catch (err) {
         console.error('Error fetching Artists', err)
       }
@@ -25,7 +27,7 @@ const ArtistAll = () => {
   return (
     <div>
       <h1 className='page-title'>Artists</h1>
-      <ArtistGrid artists={artists} />
+      <ArtistGrid artists={artists} loading={loading} />
     </div>
   );
 };

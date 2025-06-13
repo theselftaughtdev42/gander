@@ -9,11 +9,12 @@ const AlbumAll = () => {
   const [albums, setAlbums] = useState([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [loading, setLoading] = useState(true);
   const observer = useRef();
 
   const lastAlbumRef = useCallback(node => {
-    if (loading || !hasMore) return;
+    if (fetching || !hasMore) return;
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
@@ -23,23 +24,24 @@ const AlbumAll = () => {
       rootMargin: '300px', // <- trigger before entering viewport
     });
     if (node) observer.current.observe(node);
-  }, [loading, hasMore]);
+  }, [fetching, hasMore]);
 
   useEffect(() => {
     const fetchAlbums = async () => {
-      if (loading) return;
-      setLoading(true);
+      if (fetching) return;
+      setFetching(true);
       try {
         const res = await fetch(`${API_URL}/albums/?offset=${offset}&limit=${LIMIT}`);
         const data = await res.json();
         console.log(data)
 
         setAlbums(prev => [...prev, ...data]);
+        setLoading(false);
         if (data.length < LIMIT) setHasMore(false);
       } catch (err) {
         console.error('Error fetching Albums', err)
       } finally {
-        setLoading(false);
+        setFetching(false);
       }
     };
 
@@ -51,7 +53,7 @@ const AlbumAll = () => {
   return (
     <div>
       <h1 className='page-title'>All Albums</h1>
-      <AlbumGrid albums={albums} showArtist={true} />
+      <AlbumGrid albums={albums} showArtist={true} loading={loading} />
       <div ref={lastAlbumRef} style={{ height: '1px' }}></div>
     </div>
   );

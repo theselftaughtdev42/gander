@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SongList.css';
 import SongItem from './SongItem';
 
-const SongList = ({ songs, showArtist = true, showAlbumArt = true, highlightText = '' }) => {
+const SongList = ({ songs, showArtist = true, showAlbumArt = true, highlightText = '', loading }) => {
   const [currentPlaying, setCurrentPlaying] = useState(null);
+
+  useEffect(() => {
+    setCurrentPlaying(null);
+  }, [songs]);
+
+
+  if (loading) return null;
 
   return (
     <div className="song-list">

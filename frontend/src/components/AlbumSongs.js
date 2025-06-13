@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 const AlbumSongs = () => {
   const { albumId } = useParams();
   const [album, setAlbum] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAlbum = async () => {
@@ -18,6 +19,7 @@ const AlbumSongs = () => {
         console.log(data)
 
         setAlbum(data);
+        setLoading(false);
       } catch (err) {
         console.error('Error fetching songs:', err);
       }
@@ -47,7 +49,7 @@ const AlbumSongs = () => {
           </Link>        
         }
       </p>
-      {album.songs && <SongList songs={album.songs} showArtist={false} showAlbumArt={false} />}
+      {album.songs && <SongList songs={album.songs} showArtist={false} showAlbumArt={false} loading={loading} />}
     </div>
   );
 };

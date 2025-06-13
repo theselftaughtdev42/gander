@@ -6,16 +6,19 @@ import './SongsRandom.css'
 
 const SongsRandom = () => {
   const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchSongs = async () => {
     try {
+      setLoading(true);
+      setSongs([]);
+
       const res = await fetch(`${API_URL}/songs/random/10`); 
       const data = await res.json();
       console.log(data)
 
-      console.log(data)
-
       setSongs(data);
+      setLoading(false);
     } catch (err) {
       console.error('Error fetching songs:', err);
     }
@@ -33,7 +36,7 @@ const SongsRandom = () => {
           <FaSyncAlt />
         </button>
       </h1>
-      <SongList songs={songs}/>
+      <SongList songs={songs} loading={loading} />
     </div>
   );
 };
