@@ -49,7 +49,7 @@ const ArtistPage = () => {
       <div className="artist-profile-pic">
       {
       artist.profile_pic_filepath
-        ? <img src={`${API_URL}/profile_pics/${encodeURIComponent(artist.profile_pic_filepath)}`} className='artist-page-profile-pic' />
+        ? <img src={`${API_URL}/profile_pics/${encodeURIComponent(artist.profile_pic_filepath)}`} className='artist-page-profile-pic' alt='artist profile pic' />
         : <div className='artist-page-no-profile-pic'><span className='no-profile-pic-msg'>No Profile Pic</span></div>
         }
       </div>
