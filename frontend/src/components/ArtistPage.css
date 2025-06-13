@@ -2,4 +2,31 @@
     padding: 2rem;
     min-height: 100vh;
   }
+
+.artist-profile-pic {
+  display: flex;
+  justify-content: center;
+}
   
+.artist-page-profile-pic {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+}
+
+.artist-page-no-profile-pic {
+  background-color: #2a2a2a;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-profile-pic-msg {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+}

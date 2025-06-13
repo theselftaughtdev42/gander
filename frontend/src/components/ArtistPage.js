@@ -46,8 +46,17 @@ const ArtistPage = () => {
   return (
     <div>
       <h1 className="page-title">{artist.name}</h1>
+      <div className="artist-profile-pic">
+      {
+      artist.profile_pic_filepath
+        ? <img src={`${API_URL}/profile_pics/${encodeURIComponent(artist.profile_pic_filepath)}`} className='artist-page-profile-pic' />
+        : <div className='artist-page-no-profile-pic'><span className='no-profile-pic-msg'>No Profile Pic</span></div>
+        }
+      </div>
+
       <h2 className="center">Albums</h2>
       <AlbumGrid albums={artist.albums}/>
+
       <h2 className="center">All Songs</h2>
       {artistSongs && <SongList songs={artistSongs} showArtist={false} />}
     </div>
