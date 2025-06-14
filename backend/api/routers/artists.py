@@ -12,7 +12,7 @@ router = APIRouter(
 
 @router.get("/", response_model=list[ArtistPublic])
 def read_artists(*, session: Session = Depends(get_session)):
-    artists = session.exec(select(Artist)).all()
+    artists = session.exec(select(Artist).order_by(Artist.name)).all()
     return artists
 
 @router.get("/{artist_id}", response_model=ArtistPublicWithAlbums)
