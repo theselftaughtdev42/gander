@@ -2,6 +2,7 @@ from pathlib import Path
 from tinytag import TinyTag
 from rich import print
 from sqlmodel import Session, select
+import re
 
 from .db import create_db_and_tables, drop_all_tables, engine
 from .models import (
@@ -144,8 +145,9 @@ def load_artists_and_albums():
 def load_songs():
     session = Session(engine)
     count = 0
-    for root, _, files in Path("./music").walk():
-        for file in files:
+    # iterate over dirs and files in alphanumeric order
+    for root, _, files in sorted(Path("./music").walk(), key=lambda x: str(x[0])):
+        for file in sorted(files):
             if file.lower().endswith(SUPPORTED_EXTS):
                 count += 1
                 try:
@@ -173,11 +175,68 @@ def load_songs():
                     themes = get_themes(raw_genres)
                     instruments = get_instruments(raw_genres)
 
-                    file_title = file_path.name.split(" by ")[0].strip().title()
+                    ##############################################
+                    ## DATA CLEANING SPECIFIC TO MY OWN DATASET ##
+                    ##############################################
+                    file_title = file_path.name.split(" by ")[0].strip()
                     title = tag.title.split(" by ")[0].strip().title() if tag.title is not None else file_title
 
+                    # keep the longer of the two titles
                     if file_title != title:
                         title = title if len(title) > len(file_title) else file_title
+
+                    # ensure the one with 'instrumental' is retained
+                    if (
+                        "instrumental" in file_title.lower()
+                        and "instrumental" not in title.lower()
+                    ):
+                        title = file_title
+
+                    # identify a song that has multiple versions and append to title
+                    version = None
+                    if match := re.search(r"\(\d\).mp3$", file_path.name):
+                        version = int(match.group()[1:2]) + 1
+                        title += f" - Version {version}"
+                    if match := re.search(r"Artlist-\d\.mp3$", file_path.name):
+                        if " Ver " not in title and " Ver." not in title:
+                            version = int(match.group()[8:9])
+                            title += f" - Version {version}"
+                    # fix songs with double digits at the start
+                    title = re.sub(r"^\d{2}\s", "", title)
+
+                    # fix songs ending in '.Mp3' and remove that
+                    title = re.sub(r"\.Mp3$", "", title)
+                    title = re.sub(r"\.mp3$", "", title)
+
+                    # fix songs with metadata in the name:
+                    title = re.sub(r" - Master 16-441$", "", title)
+                    title = re.sub(r" - Master 16-441 -$", "", title)
+                    title = re.sub(r" -Master 16-441$", "", title)
+                    title = re.sub(r" - Master 16-441", "", title)
+                    title = re.sub(r" - Master16-441$", "", title)
+                    title = re.sub(r" - Master16-441\.1$", "", title)
+                    title = re.sub(r" - Master 16-44", "", title)
+                    title = re.sub(r" - Master 16-4$", "", title)
+                    title = re.sub(r" - Master 16-", "", title)
+                    title = re.sub(r" - Maste 16-441$", "", title)
+                    title = re.sub(r" - Master 16$", "", title)
+                    title = re.sub(r" - 16Bit$", "", title)
+                    title = re.sub(r" - Master 16Bit$", "", title)
+                    title = re.sub(r" - Master$", "", title)
+                    title = re.sub(r" - Master 1", "", title)
+                    title = re.sub(r" -$", "", title)
+                    title = re.sub(r" \($", "", title)
+                    title = re.sub(r"^\?", "", title)
+
+                    # misc
+                    title = title.replace(" - - ", " - ")
+                    title = title.replace("Again6_01", "Again")
+
+                    # SPECIFIC SITUATIONS
+                    if artist == "AamityMae":
+                        title = title.replace("I'M", "I'm")
+                    if artist == "Alon Ohana":
+                        title = title.replace("'S", "'s")
 
                     if file_path.parts[0] != "music":
                         raise Exception("Unexpected filepath")
@@ -190,6 +249,7 @@ def load_songs():
                         album=album,
                         duration=round(tag.duration, 2),
                         filepath=str(stripped_filepath),
+                        track_number=len(album.songs),
                         genres=genres,
                         moods=moods,
                         themes=themes,

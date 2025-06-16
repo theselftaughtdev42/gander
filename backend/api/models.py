@@ -224,6 +224,7 @@ class SongBase(SQLModel):
     title: str = Field(index=True)
     duration: float
     favourite: bool = False
+    track_number: int
 
 
 class Song(SongBase, table=True):
