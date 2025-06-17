@@ -275,8 +275,11 @@ def load_songs():
 def run_ingest():
     drop_all_tables()
     create_db_and_tables()
+    yield "data: Created Database\n\n"
     load_genres()
+    yield "data: Loaded Genres\n\n"
     load_artists_and_albums()
+    yield "data: Loaded Artists and Albums\n\n"
     for progress_msg in load_songs():
         yield progress_msg + "\n"
 
