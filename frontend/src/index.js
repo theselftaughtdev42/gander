@@ -11,6 +11,7 @@ import ArtistPage from './components/ArtistPage';
 import AlbumSongs from './components/AlbumSongs';
 import SongsFavourites from './components/SongsFavourites';
 import Search from './components/Search';
+import Ingest from './components/Ingest';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -27,6 +28,7 @@ root.render(
         <Route path="/artists" element={<ArtistAll />} />
         <Route path="/artist/:artistId" element={<ArtistPage />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/ingest" element={<Ingest />} />
       </Routes>
     </div>
   </Router>

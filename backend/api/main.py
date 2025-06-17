@@ -34,5 +34,4 @@ def root():
 
 @app.get("/ingest")
 def ingest():
-    run_ingest()
-    # return StreamingResponse(run_ingest(), media_type="text/event-stream")
+    return StreamingResponse(run_ingest(), media_type="text/event-stream")

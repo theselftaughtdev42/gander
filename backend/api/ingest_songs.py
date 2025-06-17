@@ -143,6 +143,8 @@ def load_artists_and_albums():
 
 
 def load_songs():
+    print("Loading Songs...")
+    yield "data: Loading Songs...\n\n"
     session = Session(engine)
     count = 0
     # iterate over dirs and files in alphanumeric order
@@ -260,20 +262,24 @@ def load_songs():
                     session.commit()
 
                     if count % 200 == 0:
-                        print(f"Loaded {count} songs...")
+                        yield f"data: Loaded {count} songs...\n\n"
 
                 except Exception as e:
                     print(f"Error reading {file_path}: {e}")
 
     session.close()
-    print(f"Loaded {count} songs.")
+    print(f"Loaded {count} songs")
+    yield f"data: Loaded {count} songs.\n\n"
+    yield "data: Ingest Complete!\n\n"
 
 def run_ingest():
     drop_all_tables()
     create_db_and_tables()
     load_genres()
     load_artists_and_albums()
-    load_songs()
+    for progress_msg in load_songs():
+        yield progress_msg + "\n"
 
 if __name__ == "__main__":
-    run_ingest()
+    for progress_msg in run_ingest():
+        print(progress_msg)
