@@ -268,9 +268,12 @@ def load_songs():
     session.close()
     print(f"Loaded {count} songs.")
 
-if __name__ == "__main__":
+def run_ingest():
     drop_all_tables()
     create_db_and_tables()
     load_genres()
     load_artists_and_albums()
     load_songs()
+
+if __name__ == "__main__":
+    run_ingest()

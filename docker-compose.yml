@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: gander_backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend/music:/app/music
+
+  frontend:
+    build: ./frontend
+    environment:
+      - GANDER_API_URL=http://backend:8000
+    container_name: gander_frontend
+    ports:
+      - "3000:80"
