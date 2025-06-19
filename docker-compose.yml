@@ -10,9 +10,10 @@ services:
       - ./backend/music:/app/music
 
   frontend:
-    build: ./frontend
-    environment:
-      - GANDER_API_URL=http://backend:8000
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_GANDER_API_URL: http://localhost:8000
     container_name: gander_frontend
     ports:
       - "3000:80"
