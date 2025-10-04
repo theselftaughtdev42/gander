@@ -62,7 +62,7 @@ def download_song(*, session: Session = Depends(get_session), song_id: uuid.UUID
     return FileResponse(
         file_path,
         media_type="application/octet-stream",
-        filename=f"{song.title} - by {song.artist.name}",
+        filename=f"{song.title} - by {song.artist.name}{file_path.suffix}",
     )
 
 
